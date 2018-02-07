@@ -56,4 +56,11 @@ typings/
 
 # dotenv environment variables file
 .env
+.*.env
+config/.*.env
 
+# Dist
+dist/
+
+# Misc
+.DS_Store
