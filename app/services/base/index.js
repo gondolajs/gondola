@@ -6,8 +6,8 @@ import Stream from './stream';
 
 class BaseService {
   constructor() {
-    this.messageQueue = new EventEmitter();
-    this.responder = new Responder(messageQueue);
-    this.stream = new Stream(messageQueue);
+    this._messageQueue = new EventEmitter();
+    this._responder = new Responder(messageQueue);
+    this._stream = new Stream(messageQueue);
   }
 }

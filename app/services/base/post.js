@@ -1,5 +1,5 @@
 export default class BasePost {
   constructor(rawPost) {
-    this.rawPost = rawPost;
+    this._rawPost = rawPost;
   }
 }
