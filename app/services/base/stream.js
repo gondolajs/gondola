@@ -24,7 +24,7 @@ export default class BaseStream {
 
   callbackURL() {
     return url.format({
-      protocol: (Config.server.useHTTPS|| Config.services.callbacksUseHTTPS) ? 'https:' : ' http:',
+      protocol: (Config.server.useHTTPS || Config.services.callbacksUseHTTPS) ? 'https:' : ' http:',
       slashes: true,
       hostname: Config.server.host || Config.services.callbackHost,
       port: Config.server.port || Config.services.callbackPort,
