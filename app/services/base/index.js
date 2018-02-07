@@ -1,15 +1,16 @@
 import { EventEmitter } from 'events';
 import Config from '../../../config';
 import Store from '../../store';
+import Firehose from '../../firehose';
 
 import Post from './post';
 import Responder from './responder';
 import Stream from './stream';
 
 export default class BaseService {
-  constructor(serviceName = '', firehose) {
+  constructor(serviceName = '') {
     this._serviceName = serviceName;
-    this._firehose = firehose;
+    this._firehose = Firehose;
     this._localQueue = new EventEmitter();
 
     this._accounts = await this._loadAccounts();
@@ -19,6 +20,8 @@ export default class BaseService {
       this._baseResponder = new Responder(this._localQueue);
       this._baseStream = new Stream(this._localQueue);
     }
+
+    this._listen();
   }
 
   start() {
@@ -105,5 +108,9 @@ export default class BaseService {
 
   async _removeKeyword(keyword = '') {
     return Store.removeKeyword(this._serviceName, keyword);
+  }
+
+  _listen() {
+    this._localQueue.on('post', (post) => firehose.emit('post', post));
   }
 }
