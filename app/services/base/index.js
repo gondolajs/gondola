@@ -111,6 +111,7 @@ export default class BaseService {
   }
 
   _listen() {
-    this._localQueue.on('post', (post) => firehose.emit('post', post));
+    this._localQueue.on('post', post => firehose.emit('post', post));
+    this._localQueue.on('delete', postId => firehose.emit('delete', postId));
   }
 }

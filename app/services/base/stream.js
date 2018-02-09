@@ -10,15 +10,15 @@ export default class BaseStream {
     this._keywords = keywords;
   }
 
-  connect() {
+  async connect() {
     throw new Error('BaseStream#connect: Must be implemented by child class!');
   }
 
-  disconnect() {
+  async disconnect() {
     throw new Error('BaseStream#disconnect: Must be implemented by child class!');
   }
 
-  reconnect() {
+  async reconnect() {
     throw new Error('BaseStream#reconnect: Must be implemented by child class!');
   }
 
