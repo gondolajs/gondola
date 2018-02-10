@@ -61,13 +61,13 @@ export default class TwitterStream extends BaseStream {
   }
 
   _processAndEmitDelete(deleteMessage) {
-    // TODO format delete
-    this._localQueue.emit('delete', deleteMessage);
+    let msg = { service: 'twitter', service_id: deleteMessage.delete.status.id_str };
+    this._localQueue.emit('delete', msg);
   }
 
-  _processError(error) {
-    // TODO format error
-    this._localQueue.emit('error', error);
-    this.reconnect();
+  _processAndEmitError(error) {
+    let msg = { service: 'twitter', error: error.toString() };
+    this._localQueue.emit('error', msg);
+    return this.reconnect();
   }
 }

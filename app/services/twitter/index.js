@@ -1,19 +1,56 @@
 import BaseService from '../base';
 
-export default class TwitterService extends BaseService {
+class TwitterService extends BaseService {
   constructor() {
     super('twitter');
   }
 
-  start() {
-    this._stream.connect();
+  async start() {
+    try {
+      return await this._stream.connect();
+    } catch(error) {
+      console.error(error);
+      return Promise.reject(error);
+    }
   }
 
-  stop() {
-    this._stream.disconnect();
+  async stop() {
+    try {
+      return await this._stream.disconnect();
+    } catch(error) {
+      console.error(error);
+      return Promise.reject(error);
+    }
   }
 
-  restart() {
-    this._stream.reconnect();
+  async restart() {
+    try {
+      return await this._stream.reconnect();
+    } catch(error) {
+      console.error(error);
+      return Promise.reject(error);
+    }
+  }
+
+  async addAccount(account = {}) {
+    super(account);
+    return this.restart();
+  }
+
+  async removeAccount(account) {
+    super(account);
+    return this.restart();
+  }
+
+  async addKeyword(keyword) {
+    super(keyword);
+    return this.restart();
+  }
+
+  async removeKeyword(keyword) {
+    super(keyword);
+    return this.restart();
   }
 }
+
+export default let twitterService = new TwitterService();

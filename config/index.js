@@ -5,6 +5,7 @@ export default {
     useHTTPS: false,
   },
   services: {
+    // active: ['twitter', 'instagram', 'facebook'],
     lazyLoad: false,
     // callbacksUseHTTPS: false,
     // callbackHost: 'localhost',

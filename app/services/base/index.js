@@ -24,15 +24,15 @@ export default class BaseService {
     this._listen();
   }
 
-  start() {
+  async start() {
     throw new Error('BaseService: Must be implemented by child class!');
   }
 
-  stop() {
+  async stop() {
     throw new Error('BaseService: Must be implemented by child class!');
   }
 
-  restart() {
+  async restart() {
     throw new Error('BaseService: Must be implemented by child class!');
   }
 
@@ -40,7 +40,6 @@ export default class BaseService {
     try {
       let accountAdded = await this._addAccount(account);
       if (accountAdded) { this._accounts.push(account); }
-      this.restart();
     } catch(e) {
       console.error(e);
     }
@@ -50,7 +49,6 @@ export default class BaseService {
     try {
       let accountRemoved = await this._accountKeyword(account);
       if (accountRemoved) { this._accounts.remove(account); }
-      this.restart();
     } catch(e) {
       console.error(e);
     }
@@ -60,7 +58,6 @@ export default class BaseService {
     try {
       let keywordAdded = await this._addKeyword(keyword);
       if (keywordAdded) { this._keywords.push(keyowrd); }
-      this.restart();
     } catch(e) {
       console.error(e);
     }
@@ -70,7 +67,6 @@ export default class BaseService {
     try {
       let keywordRemoved = await this._removeKeyword(keyword);
       if (keywordRemoved) { this._keywords.remove(keyword); }
-      this.restart();
     } catch(e) {
       console.error(e);
     }
@@ -86,32 +82,33 @@ export default class BaseService {
     return this._baseStream;
   }
 
-  async _loadAccounts() {
-    return Store.loadAccounts(this._serviceName) || [];
+  _loadAccounts() {
+    return Store.loadAccounts(this._serviceName) || Promise.resolve([]);
   }
 
-  async _addAccount(account = {}) {
+  _addAccount(account = {}) {
     return Store.addAccount(this._serviceName, account);
   }
 
-  async _removeAccount(accountKey) {
+  _removeAccount(accountKey) {
     return Store.removeAccount(this._serviceName, accountKey);
   }
 
-  async _loadKeywords() {
+  _loadKeywords() {
     return Store.loadKeywords(this._serviceName) || [];
   }
 
-  async _addKeyword(keyword = '') {
+  _addKeyword(keyword = '') {
     return Store.addKeyword(this._serviceName, keyword);
   }
 
-  async _removeKeyword(keyword = '') {
+  _removeKeyword(keyword = '') {
     return Store.removeKeyword(this._serviceName, keyword);
   }
 
   _listen() {
     this._localQueue.on('post', post => firehose.emit('post', post));
-    this._localQueue.on('delete', postId => firehose.emit('delete', postId));
+    this._localQueue.on('delete', deletion => firehose.emit('delete', deletion));
+    this._localQueue.on('error', error => firehose.emit('error', error));
   }
 }
