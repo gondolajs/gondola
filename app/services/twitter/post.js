@@ -73,10 +73,10 @@ export default TwitterPost extends BasePost {
 
   get source() {
     return {
-      service:      'twitter',
-      name:         'Twitter',
-      description:  'Social networking and microblogging service utilising instant messaging, SMS or a web interface.',
-      domain:       'twitter.com',
+      service: 'twitter',
+      name: 'Twitter',
+      description: 'Social networking and microblogging service utilising instant messaging, SMS or a web interface.',
+      domain: 'twitter.com',
       external_uri: 'https://twitter.com/'
     };
   }

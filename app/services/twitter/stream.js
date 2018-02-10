@@ -9,20 +9,20 @@ export default class TwitterStream extends BaseStream {
   }
 
   async connect() {
-    this._localQueue.emit('connecting');
+    this._messageQueue.emit('connecting');
     this._stream = this._twit.stream('statuses/filter', this._formatStreamOptions());
     this._listen();
   }
 
   async disconnect() {
-    this._localQueue.emit('disconnecting');
+    this._messageQueue.emit('disconnecting');
     this._stream.stop();
     this._stopListening();
     this._stream = null;
   }
 
   async reconnect() {
-    this._localQueue.emit('reconnecting');
+    this._messageQueue.emit('reconnecting');
     await this.disconnect();
     await this.connect();
   }
@@ -48,26 +48,28 @@ export default class TwitterStream extends BaseStream {
   _listen() {
     this._stream.on('tweet', this._processAndEmitTweet);
     this._stream.on('delete', this._processAndEmitDelete);
-    this._stream.on('error', this._processError);
+    this._stream.on('error', this._processAndEmitError);
   }
 
   _stopListening() {
-    // unbind observers
+    this._stream.removeAllListeners('tweet');
+    this._stream.removeAllListeners('delete');
+    this._stream.removeAllListeners('error');
   }
 
   _processAndEmitTweet(tweet) {
     let post = new TwitterPost(tweet);
-    this._localQueue.emit('post', post);
+    this._messageQueue.emit('post', post);
   }
 
   _processAndEmitDelete(deleteMessage) {
     let msg = { service: 'twitter', service_id: deleteMessage.delete.status.id_str };
-    this._localQueue.emit('delete', msg);
+    this._messageQueue.emit('delete', msg);
   }
 
   _processAndEmitError(error) {
     let msg = { service: 'twitter', error: error.toString() };
-    this._localQueue.emit('error', msg);
+    this._messageQueue.emit('error', msg);
     return this.reconnect();
   }
 }
