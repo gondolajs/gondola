@@ -2,9 +2,13 @@ import path from 'path';
 import Config from '../../config';
 import SelectedStore from path.join('./', Config.store.kind, '.js');
 
-class Store {
+let instance;
+
+export default class Store {
   constructor() {
+    if (instance) { return instance; }
     this._store = new SelectedStore(Config.store.params);
+    this.instance = this;
   }
 
   static connect() {
@@ -47,5 +51,3 @@ class Store {
     return this._store.removeKeyword(service, keyword);
   }
 }
-
-export default let store = new Store();

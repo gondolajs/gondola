@@ -1,8 +1,12 @@
 import BaseService from '../base';
 
-class InstagramService extends BaseService {
+let instance;
+
+export default class InstagramService extends BaseService {
   constructor() {
+    if (instance) { return instance; }
     super('instagram');
+    this.instance = this;
   }
 
   async start() {
@@ -52,5 +56,3 @@ class InstagramService extends BaseService {
     return this.restart();
   }
 }
-
-export default let instagramService = new InstagramService();
