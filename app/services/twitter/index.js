@@ -1,7 +1,10 @@
 import BaseService from '../base';
 
-class TwitterService extends BaseService {
+let instance;
+
+export default class TwitterService extends BaseService {
   constructor() {
+    if (instance) { return instance; }
     super('twitter');
   }
 
@@ -52,5 +55,3 @@ class TwitterService extends BaseService {
     return this.restart();
   }
 }
-
-export default let twitterService = new TwitterService();

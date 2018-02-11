@@ -1,8 +1,12 @@
 import Config from '../config';
 
-class Logger {
+let instance;
+
+export default class Logger {
   constructor() {
+    if (instance) { return instance; }
     this._loggerDefault = Config.logger.default;
+    this.instance = this;
   }
 
   static log(log) {
@@ -25,5 +29,3 @@ class Logger {
     console.log(log);
   }
 }
-
-export default let logger = new Logger();

@@ -5,10 +5,14 @@ import Logger from './logger';
 import Middleware from './middleware';
 import API from './api';
 
-class Gondola {
+let instance;
+
+export default class Gondola {
   constructor() {
+    if (instance) { return instance; }
     Logger.log("Starting Gondola...");
     this._listen();
+    this.instance = this;
   }
 
   // Private
@@ -35,5 +39,3 @@ class Gondola {
     Firehose.on('error', error => this._logError);
   }
 }
-
-export default let gondola = new Gondola();
