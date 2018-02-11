@@ -68,7 +68,7 @@ export default class TwitterStream extends BaseStream {
   }
 
   _processAndEmitError(error) {
-    let msg = { service: 'twitter', error: error.toString() };
+    let msg = { service: 'twitter', message: error.toString() };
     this._messageQueue.emit('error', msg);
     return this.reconnect();
   }

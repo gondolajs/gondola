@@ -11,4 +11,17 @@ export default {
     // callbackHost: 'localhost',
     // callbackPort: 4000
   },
+  store: {
+    kind: "memory",
+    params: {}
+  },
+  logger: {
+    default: "normal"
+  },
+  streamHandler: {
+
+  },
+  middleware: {
+    plugins: []
+  }
 };
