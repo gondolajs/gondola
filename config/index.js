@@ -19,9 +19,12 @@ export default {
     default: "normal"
   },
   streamHandler: {
-
+    kind: "memory",
+    params: {}
   },
   middleware: {
-    plugins: []
+    plugins: [
+      // 'sentiment',
+    ]
   }
 };

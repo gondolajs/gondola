@@ -7,7 +7,7 @@ import API from './api';
 
 class Gondola {
   constructor() {
-    console.log("Gondola");
+    Logger.log("Starting Gondola...");
     this._listen();
   }
 

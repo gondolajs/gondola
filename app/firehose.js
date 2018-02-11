@@ -1,9 +1,11 @@
 import { EventEmitter } from 'events';
 
-class Firehose extends EventEmitter {
+let instance;
+
+export default class Firehose extends EventEmitter {
   constructor() {
+    if (instance) { return instance; }
     super();
+    this.instance = this;
   }
 }
-
-export default let firehose = new Firehose();

@@ -1,9 +1,11 @@
 import { EventEmitter } from 'events';
 
-class PostStream extends EventEmitter {
+let instance;
+
+export default class PostStream extends EventEmitter {
   constructor() {
+    if (instance) { return instance; }
     super();
+    this.instance = instance;
   }
 }
-
-export default let post_stream = new PostStream();

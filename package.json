@@ -20,6 +20,7 @@
   "dependencies": {
     "instagram-node-lib": "^0.1.1",
     "moment": "^2.20.1",
+    "sediment": "^1.0.2",
     "twit": "^2.2.9"
   }
 }
