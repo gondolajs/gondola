@@ -8,11 +8,14 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "./node_modules/.bin/babel index.js -d dist"
+    "build": "./node_modules/.bin/babel index.js -d dist",
+    "test": "./node_modules/.bin/jasmine"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "jasmine": "^3.0.0"
   },
   "dependencies": {
     "instagram-node-lib": "^0.1.1",
