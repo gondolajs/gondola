@@ -3,11 +3,15 @@ import { loadPlugins } from './plugins';
 import PostStream from '../post_stream';
 import StreamHandler from '../stream_handler';
 
-class Middleware {
+let instance;
+
+export default class Middleware {
   constructor() {
+    if (instance) { return instance; }
     this._middleware = Config.middleware;
     this._plugins = loadPlugins(this._middleware.plugins);
     this._listen();
+    this.instance = this;
   }
 
   // Private
@@ -31,5 +35,3 @@ class Middleware {
     PostStream.on('post', post => this._handlePost);
   }
 }
-
-export default let middleware = new Middleware();
